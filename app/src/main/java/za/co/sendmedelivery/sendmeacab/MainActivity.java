@@ -89,7 +89,9 @@ public class MainActivity extends AppCompatActivity {
                     String response = "";
                     String line;
 
-                    while ((line = bufferedReader.readLine())!=null) response += line;
+                    while ((line = bufferedReader.readLine())!=null) {
+                        response += line;
+                    }
 
                     bufferedReader.close();
                     inputStream.close();
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String aVoid) {
-            progressBar = new ProgressBar(MainActivity.this, null, R.layout.loading );
+            progressBar = findViewById(R.id.progressbar);
             progressBar.setVisibility(View.VISIBLE);
         }
     }
