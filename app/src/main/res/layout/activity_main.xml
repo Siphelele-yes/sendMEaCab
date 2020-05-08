@@ -25,7 +25,6 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="10dp"
-        android:autoText="false"
         android:background="@layout/rounded_border_edittext"
         android:capitalize="none"
         android:cursorVisible="true"
