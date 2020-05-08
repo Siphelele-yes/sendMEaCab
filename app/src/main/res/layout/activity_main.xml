@@ -57,7 +57,7 @@
         android:padding="10dp" />
 
     <Button
-        android:id="@+id/btnSubmit"
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
@@ -65,9 +65,9 @@
         android:layout_marginRight="80dp"
         android:background="@color/colorPrimary"
         android:gravity="center_horizontal"
-        android:onClick="btnSubmit_OnClick"
+        android:onClick="btnLogin_OnClick"
         android:padding="10dp"
-        android:text="@string/btn_submit"
+        android:text="@string/btn_Login"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="normal|bold" />

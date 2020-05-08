@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         PasswordET = findViewById(R.id.etPassword);
     }
     // Triggers when LOGIN Button clicked
-    public void btnSubmit_OnClick(View v){
+    public void btnLogin_OnClick(View v){
 
 
         // Get text from email and password field

@@ -3,7 +3,7 @@
     <string name="tv_Head">sendME aCab</string>
     <string name="et_email">Email address</string>
     <string name="et_password">Password</string>
-    <string name="btn_submit">Login</string>
+    <string name="btn_Login">Login</string>
     <string name="tv_Due">Due Orders</string>
     <string name="status">Order Status</string>
     <string name="tv_Ready">Ready Orders</string>
