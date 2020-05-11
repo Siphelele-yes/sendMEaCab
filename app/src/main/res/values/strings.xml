@@ -30,4 +30,6 @@
     <string name="et_EmailSignUp">Email Address</string>
     <string name="et_AddressSignUp">Default Address (Optional)</string>
     <string name="et_PasswordAgn">Re-enter Password</string>
+    <string name="api_key">Auto_Correct</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>
