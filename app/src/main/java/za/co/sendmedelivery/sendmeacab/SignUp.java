@@ -2,10 +2,7 @@ package za.co.sendmedelivery.sendmeacab;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +45,6 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void btnSignUpDone_OnClick(View v){
-        //Final app edit ->
         final String fname = NameET.getText().toString();
         final String sname = SurnameET.getText().toString();
         final String phone_num = PhoneET.getText().toString();
@@ -74,7 +70,7 @@ public class SignUp extends AppCompatActivity {
                             }
                             else if(intResponse==1){
                                 Toast.makeText(getApplicationContext(), "Welcome to sendME. Happy riding! ", Toast.LENGTH_LONG).show();
-                                startActivity((new Intent(SignUp.this, DefineTripActivity.class)));
+                                startActivity((new Intent(SignUp.this, TripDetails.class)));
                             }
                             else if(intResponse==3){
                                 //Toast.makeText(getApplicationContext(), "There have been a problem signing you up. Please try again! ", Toast.LENGTH_LONG).show();
@@ -108,10 +104,6 @@ public class SignUp extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "Passwords don't match. Re-enter again!" , Toast.LENGTH_LONG).show();
         }
-
-
-
-
     }
 
 }

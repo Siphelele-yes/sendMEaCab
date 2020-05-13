@@ -12,11 +12,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".TripDetails"
+            android:label="@string/title_activity_trip_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".SignUp"
             android:label="@string/title_activity_sign_up"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ForgotPassword"
             android:label="@string/title_activity_forgot_password"
@@ -26,8 +31,8 @@
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".DefineTripActivity"
-            android:label="@string/title_activity_define_trip"
+            android:name=".NavbarDrawerActivity"
+            android:label="@string/title_activity_navbar_drawer"
             android:theme="@style/HiddenTitleTheme" />
         <activity
             android:name=".MainActivity"

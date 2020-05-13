@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TripDetails">
+
+    <LinearLayout
+        android:id="@+id/topMapLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottomTripSpecLayout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/currentLocation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleX="3"
+            android:scaleY="3.5"
+            app:srcCompat="@mipmap/ic_map_example" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomTripSpecLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topMapLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_pickupIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
+                    app:srcCompat="@drawable/ic_gps" />
+
+                <ImageView
+                    android:id="@+id/iv_roadIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    app:srcCompat="@drawable/ic_road" />
+
+                <ImageView
+                    android:id="@+id/iv_dropoffIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="8dp"
+                    app:srcCompat="@drawable/ic_pin_drop" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etPickupAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:background="@layout/rounded_border_edittext"
+                    android:cursorVisible="true"
+                    android:ems="10"
+                    android:hint="@string/et_PickupAddress"
+                    android:inputType="textPostalAddress"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textCursorDrawable="@null" />
+
+                <EditText
+                    android:id="@+id/etDropoffAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@layout/rounded_border_edittext"
+                    android:cursorVisible="true"
+                    android:ems="10"
+                    android:hint="@string/et_DropoffAddress"
+                    android:inputType="textPostalAddress"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textCursorDrawable="@null" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorTableDataSep" />
+
+        <Button
+            android:id="@+id/btnUseLocationPickup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:drawableLeft="@drawable/ic_my_location"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/colorPrimary"
+            android:gravity="start|center_vertical"
+            android:onClick="btnUseLocation_OnClick"
+            android:paddingLeft="20dp"
+            android:text="@string/btnUseLocation"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:background="@color/colorTableDataSep" />
+
+        <Button
+            android:id="@+id/btnDefaultPickup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:drawableLeft="@drawable/ic_current_location"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/colorPrimary"
+            android:gravity="start|left|center_vertical"
+            android:onClick="btnDefaultAddress_OnClick"
+            android:paddingLeft="20dp"
+            android:text="@string/btnUseDefaultAddress"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:background="@color/colorTableDataSep" />
+
+        <Button
+            android:id="@+id/btnPickupMap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:drawableLeft="@drawable/ic_map_set"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/colorPrimary"
+            android:gravity="start|center_vertical"
+            android:onClick="btnSetPickupMap_OnClick"
+            android:paddingLeft="20dp"
+            android:text="@string/btnSetPickupMap"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:background="@color/colorTableDataSep"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
