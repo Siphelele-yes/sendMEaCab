@@ -41,4 +41,6 @@
     <string name="et_DropoffAddress">Enter Drop-off Address</string>
     <string name="title_activity_trip_spec">TripSpec</string>
     <string name="title_activity_trip_details">TripDetails</string>
+    <string name="api_key">Auto_Correct</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>
