@@ -151,7 +151,7 @@
         android:layout_gravity="center|center_horizontal"
         android:gravity="center|center_horizontal"
         android:paddingTop="6dp"
-        android:visibility="gone"
-        android:text="@string/back_to_login"
-        android:textSize="14sp" />
+        android:text="@string/go_back_to_login"
+        android:textSize="14sp"
+        android:visibility="gone"/>
 </LinearLayout>
