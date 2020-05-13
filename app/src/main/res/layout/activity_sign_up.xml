@@ -143,4 +143,15 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="normal|bold" />
+
+    <TextView
+        android:id="@+id/tv_back_to_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal"
+        android:gravity="center|center_horizontal"
+        android:paddingTop="6dp"
+        android:text="@string/go_back_to_login"
+        android:textSize="14sp"
+        android:visibility="gone"/>
 </LinearLayout>

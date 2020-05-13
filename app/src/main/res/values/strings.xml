@@ -30,4 +30,5 @@
     <string name="et_EmailSignUp">Email Address</string>
     <string name="et_AddressSignUp">Default Address (Optional)</string>
     <string name="et_PasswordAgn">Re-enter Password</string>
+    <string name="go_back_to_login">Go back to Login</string>
 </resources>
