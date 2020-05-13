@@ -2,8 +2,6 @@ package za.co.sendmedelivery.sendmeacab;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -22,7 +20,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import java.lang.*;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignUp extends AppCompatActivity {
+    EditText NameET, SurnameET, PhoneET, EmailET, AddressET, PasswordET, PWET;
+    Button SignUpButton;
+    TextView backToLogin;
 
     EditText NameET, SurnameET, PhoneET, EmailET, AddressET, PasswordET, PWET;
     Button SignUpButton;
@@ -43,7 +54,6 @@ public class SignUp extends AppCompatActivity {
         PWET=(EditText)findViewById(R.id.etPasswordAgnSignUp);
 
         backToLogin = (TextView)findViewById(R.id.tv_back_to_login);
-
     }
 
     public void btnSignUpDone_OnClick(View v){
@@ -57,7 +67,7 @@ public class SignUp extends AppCompatActivity {
         final String passwordConfirm = PWET.getText().toString();
         final String psw_repeat;
         final int response1=1,response0=0;
-
+      
             boolean flagResult=InputValidation(fname,sname,phone_num,email,passwordEntry1,passwordConfirm);
             if(flagResult&&passwordEntry1.equals(passwordConfirm)){
                 psw_repeat = passwordConfirm;

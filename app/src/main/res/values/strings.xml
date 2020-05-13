@@ -15,12 +15,19 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_sign_up">SignUp</string>
     <string name="title_activity_forgot_password">ForgotPassword</string>
+    <string name="title_activity_navbar_drawer">NavbarDrawerActivity</string>
     <string name="btnLogin">Login</string>
     <string name="btnSignUp">Sign Up</string>
+    <string name="btnSetPickupMap">Set Pickup On Map</string>
+    <string name="btnSetDropoffMap">Set Dropff On Map</string>
+    <string name="btnUseLocation">Use Current Location</string>
+    <string name="btnUseDefaultAddress">My Default Address</string>
     <string name="fgtPassword">I forgot my password</string>
     <string name="btnRecoverPassword">Recover Password</string>
     <string name="title_activity_reset_password">ResetPassword</string>
     <string name="tv_resendEmail">Resend Email</string>
+    <string name="tv_currentLocationYes">Current Location:</string>
+    <string name="tv_currentLocationNo">Switch on your device\'s location to see your current location</string>
     <string name="et_NewPassword">New Password</string>
     <string name="et_NewPasswordAgn">Re-enter New Password</string>
     <string name="btn_ResetPassword">Reset Password</string>
@@ -31,4 +38,10 @@
     <string name="et_AddressSignUp">Default Address (Optional)</string>
     <string name="et_PasswordAgn">Re-enter Password</string>
     <string name="go_back_to_login">Go back to Login</string>
+    <string name="et_PickupAddress">Enter Pickup Address</string>
+    <string name="et_DropoffAddress">Enter Drop-off Address</string>
+    <string name="title_activity_trip_spec">TripSpec</string>
+    <string name="title_activity_trip_details">TripDetails</string>
+    <string name="api_key">Auto_Correct</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>
