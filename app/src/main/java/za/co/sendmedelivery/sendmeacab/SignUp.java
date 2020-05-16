@@ -2,14 +2,18 @@ package za.co.sendmedelivery.sendmeacab;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import com.android.volley.AuthFailureError;
@@ -20,25 +24,26 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import java.lang.*;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class SignUp extends AppCompatActivity {
-    EditText NameET, SurnameET, PhoneET, EmailET, AddressET, PasswordET, PWET;
-    Button SignUpButton;
-    TextView backToLogin;
-
+public class SignUp<TAG> extends AppCompatActivity {
     EditText NameET, SurnameET, PhoneET, EmailET, AddressET, PasswordET, PWET;
     Button SignUpButton;
     TextView backToLogin;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +58,7 @@ public class SignUp extends AppCompatActivity {
         PasswordET=(EditText)findViewById(R.id.etPasswordSignUp);
         PWET=(EditText)findViewById(R.id.etPasswordAgnSignUp);
 
-        backToLogin = (TextView)findViewById(R.id.tv_back_to_login);
+        backToLogin = (TextView)findViewById(R.id.tvBackToLogin);
     }
 
     public void btnSignUpDone_OnClick(View v){
@@ -83,7 +88,7 @@ public class SignUp extends AppCompatActivity {
                                     backToLogin.setVisibility(View.VISIBLE);
                                 }
                                 else if(intResponse==1){
-                                    startActivity((new Intent(SignUp.this, DefineTripActivity.class)));
+                                    startActivity((new Intent(SignUp.this, TripDetails.class)));
                                 }
                                 else if(intResponse==3){
                                     Toast.makeText(getApplicationContext(), "Database connection problem ", Toast.LENGTH_LONG).show();

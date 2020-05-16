@@ -18,7 +18,7 @@
         <activity
             android:name=".TripDetails"
             android:label="@string/title_activity_trip_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/HiddenTitleTheme"></activity>
         <activity
             android:name=".SignUp"
             android:label="@string/title_activity_sign_up"
