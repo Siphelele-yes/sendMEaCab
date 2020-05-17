@@ -1,12 +1,15 @@
 package za.co.sendmedelivery.sendmeacab;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.InstrumentationRegistry.*;
 import static org.junit.Assert.*;
 
 /**
@@ -19,7 +22,7 @@ public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() {
         // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = getTargetContext();
 
         assertEquals("za.co.sendmedelivery.sendmeacab", appContext.getPackageName());
     }
