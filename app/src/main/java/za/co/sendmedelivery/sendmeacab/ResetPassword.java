@@ -2,13 +2,10 @@ package za.co.sendmedelivery.sendmeacab;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-=======
-import android.support.v7.app.AppCompatActivity;
->>>>>>> master
 import android.view.View;
 import android.widget.Toast;
 

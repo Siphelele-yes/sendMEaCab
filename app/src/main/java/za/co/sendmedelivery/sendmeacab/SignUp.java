@@ -2,13 +2,9 @@ package za.co.sendmedelivery.sendmeacab;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
-=======
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
->>>>>>> master
+
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -34,10 +30,6 @@ import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-<<<<<<< HEAD
-import java.util.HashMap;
-import java.util.Map;
-=======
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -48,11 +40,6 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignUp extends AppCompatActivity {
-    EditText NameET, SurnameET, PhoneET, EmailET, AddressET, PasswordET, PWET;
-    Button SignUpButton;
-    TextView backToLogin;
->>>>>>> master
 
 public class SignUp extends AppCompatActivity {
     EditText NameET, SurnameET, PhoneET, EmailET, AddressET, PasswordET, PWET;
@@ -63,7 +50,7 @@ public class SignUp extends AppCompatActivity {
     private EditText queryText;
     StringBuilder mResult;
     LinearLayout PredictionLayout;
-    private static final String TAG = SignUp.class.getSimpleName();
+    private final String TAG = SignUp.class.getSimpleName();
     private AutoCompleteTextView locationSearchActv;// instance of AutoCompleteText View
     private TextView addressTv, locationDataTv; // TextViews Used to display the adddress selected by the user
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -73,16 +60,6 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
-        SignUpButton=(Button) findViewById(R.id.btnSignUpDone);
-        NameET=(EditText)findViewById(R.id.etNameSignUp);
-        SurnameET=(EditText)findViewById(R.id.etSurnameSignUp);
-        PhoneET=(EditText)findViewById(R.id.etPhoneSignUp);
-        EmailET=(EditText)findViewById(R.id.etEmailSignUp);
-        PasswordET=(EditText)findViewById(R.id.etPasswordSignUp);
-        PWET=(EditText)findViewById(R.id.etPasswordAgnSignUp);
-        backToLogin = (TextView)findViewById(R.id.tv_back_to_login);
-<<<<<<< HEAD
 
         AddressET = findViewById(R.id.autocomplete_address);
         locationSearchActv = findViewById(R.id.autocomplete_address);
@@ -212,11 +189,9 @@ public class SignUp extends AppCompatActivity {
                 PredictionLayout.setVisibility(View.GONE);
             }
         });
-=======
->>>>>>> master
     }
 
-    public void btnSignUpDone_OnClick(View v){
+    public void btnSignUpDone_OnClick(View v) {
         //Final app edit ->
         final String fname = NameET.getText().toString();
         final String sname = SurnameET.getText().toString();
@@ -226,43 +201,11 @@ public class SignUp extends AppCompatActivity {
         final String passwordEntry1 = PasswordET.getText().toString();
         final String passwordConfirm = PWET.getText().toString();
         final String psw_repeat;
-        final int response1=1,response0=0;
-<<<<<<< HEAD
+        final int response1 = 1, response0 = 0;
 
         boolean flagResult=InputValidation(fname,sname,phone_num,email,passwordEntry1,passwordConfirm);
         if(flagResult&&passwordEntry1.equals(passwordConfirm)){
             psw_repeat = passwordConfirm;
-=======
-      
-            boolean flagResult=InputValidation(fname,sname,phone_num,email,passwordEntry1,passwordConfirm);
-            if(flagResult&&passwordEntry1.equals(passwordConfirm)){
-                psw_repeat = passwordConfirm;
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://sendmedelivery.co.za/aCab/App/SignUp.php",
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                int intResponse = Integer.parseInt(response);
-                                if(intResponse==0){
-                                    Toast.makeText(getApplicationContext(), "An account with your Email address or Phone number already exists. " +
-                                            "Go back to Login or try again.", Toast.LENGTH_LONG).show();
-                                    backToLogin.setVisibility(View.VISIBLE);
-                                }
-                                else if(intResponse==1){
-                                    startActivity((new Intent(SignUp.this, DefineTripActivity.class)));
-                                }
-                                else if(intResponse==3){
-                                    Toast.makeText(getApplicationContext(), "Database connection problem ", Toast.LENGTH_LONG).show();
-
-                                }
-                                else
-                                    Toast.makeText(getApplicationContext(), "There is a database query problem.", Toast.LENGTH_LONG).show();
-
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
->>>>>>> master
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://sendmedelivery.co.za/aCab/App/SignUp.php",
                     response -> {
@@ -300,6 +243,7 @@ public class SignUp extends AppCompatActivity {
             Volley.newRequestQueue(this).add(stringRequest);
         }
     }
+
     public boolean InputValidation(String fname, String sname, String phone_num,String email, String passwordEntry1, String passwordConfirm){
         boolean flag=true;
 
