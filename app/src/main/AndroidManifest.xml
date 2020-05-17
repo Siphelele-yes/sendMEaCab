@@ -2,11 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="za.co.sendmedelivery.sendmeacab">
 
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+=======
+  
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+>>>>>>> master
 
     <application
         android:allowBackup="true"
@@ -14,22 +21,27 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ResetPassword"
-            android:label="@string/title_activity_reset_password"
+            android:name=".TripDetails"
+            android:label="@string/title_activity_trip_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".ForgotPassword"
-            android:label="@string/title_activity_forgot_password"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SignUp"
             android:label="@string/title_activity_sign_up"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".DefineTripActivity"
-            android:label="@string/title_activity_define_trip"
+            android:name=".ForgotPassword"
+            android:label="@string/title_activity_forgot_password"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ResetPassword"
+            android:label="@string/title_activity_reset_password"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NavbarDrawerActivity"
+            android:label="@string/title_activity_navbar_drawer"
             android:theme="@style/HiddenTitleTheme" />
         <activity
             android:name=".MainActivity"
