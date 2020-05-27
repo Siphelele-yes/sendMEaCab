@@ -48,4 +48,15 @@
     <string name="title_myProfile">My Profile</string>
     <string name="tv_CurrentPassword">Current Password</string>
     <string name="api_key">AIzaSyBV0bZmAnuY96_VoTFR-7BxgngH86P3Hv8</string>
+    <string name="map_key" translatable="false">AIzaSyBLCIeprajGmDHwzYDy-pkHPKJtO8juWLo</string>
+    <string name="title_activity_trip_confirm">TripConfirm</string>
+    <string name="title_activity_trip_finalise">TripFinaliseActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
