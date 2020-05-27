@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         ClickableSpan clickableSpan_fgt_password = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                startActivity((new Intent(MainActivity.this, ForgotPassword.class)));
+                startActivity((new Intent(MainActivity.this, SignUp.class)));
             }
 
             @Override
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnSignUp_OnClick(View v){
-
-        startActivity((new Intent(MainActivity.this, SignUp.class)));
+        startActivity((new Intent(MainActivity.this, TripDetails.class)));
     }
 }

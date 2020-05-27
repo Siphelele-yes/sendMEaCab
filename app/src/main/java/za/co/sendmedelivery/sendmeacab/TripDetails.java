@@ -89,7 +89,7 @@ public class TripDetails extends AppCompatActivity implements NavigationView.OnN
     private DrawerLayout drawer; //Drawer Menu
     //Current location for map
     GoogleMap googleMap;
-    LatLng latLng;
+    LatLng latLng, newMarkerLatLng;
     SupportMapFragment mapFragment;
     FusedLocationProviderClient client;
     private final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -101,8 +101,8 @@ public class TripDetails extends AppCompatActivity implements NavigationView.OnN
     int delay = 2*1000; //Delay for 2 seconds.  One second = 1000 milliseconds.
     //get address from coordinates
     Geocoder geocoder;
-    List<Address> address;
-    String fullCurrentAddress, currentAddress, currentCity, currentState, currentCountry, currentPostalCode;
+    List<Address> address, newAddressList;
+    String fullCurrentAddress, fullNewAddress;
     boolean currentLocationSet = false;
 
     //Animation variables
@@ -535,49 +535,7 @@ public class TripDetails extends AppCompatActivity implements NavigationView.OnN
                 setOnMapBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*if(!currentLocationSet){
-                            latLng = new LatLng(-29.0852,26.1596);
-                        }
-                        MarkerOptions pickUpOptions = new MarkerOptions().position(latLng)
-                                .title("Pick up point")
-                                .draggable(true);
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                        googleMap.addMarker(pickUpOptions);
-
-                        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-                            @Override
-                            public void onMarkerDragStart(Marker marker) {
-
-                            }
-
-                            @Override
-                            public void onMarkerDrag(Marker marker) {
-
-                            }
-
-                            @Override
-                            public void onMarkerDragEnd(Marker marker) {
-                                *//*try {
-                                    address = geocoder.getFromLocation(location.getLatitude(),
-                                            location.getLongitude(),1);
-
-                                    currentAddress = address.get(0).getAddressLine(0);
-                                    currentCity = address.get(0).getLocality();
-                                    currentState = address.get(0).getAdminArea();
-                                    currentCountry = address.get(0).getCountryName();
-                                    currentPostalCode = address.get(0).getPostalCode();
-                                    fullCurrentAddress = currentAddress + ", " + currentCity + ", "
-                                            + currentState + ", " + currentCountry + ", " + currentPostalCode;
-
-                                    currentLocationSet = true;
-
-                                    //Toast.makeText(getApplicationContext(), fullCurrentAddress,Toast.LENGTH_LONG).show();
-                                } catch (IOException e) {
-                                    currentLocationBtn.setVisibility(View.GONE);
-                                    currentLocationDiv.setVisibility(View.GONE);
-                                }*//*
-                            }
-                        });*/
+                        addMarkerOnMap(currentLocationSet, 1, pickupET);
                     }
                 });
             }
@@ -595,7 +553,7 @@ public class TripDetails extends AppCompatActivity implements NavigationView.OnN
         dropoffET.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                addressEntryAnim();
+                //addressEntryAnim();
                 return false;
             }
         });
@@ -620,7 +578,7 @@ public class TripDetails extends AppCompatActivity implements NavigationView.OnN
                 setOnMapBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        addMarkerOnMap(currentLocationSet, 1, dropoffET);
                     }
                 });
             }
@@ -736,14 +694,7 @@ public class TripDetails extends AppCompatActivity implements NavigationView.OnN
                                 address = geocoder.getFromLocation(location.getLatitude(),
                                         location.getLongitude(),1);
 
-                                currentAddress = address.get(0).getAddressLine(0);
-                                currentCity = address.get(0).getLocality();
-                                currentState = address.get(0).getAdminArea();
-                                currentCountry = address.get(0).getCountryName();
-                                currentPostalCode = address.get(0).getPostalCode();
-                                fullCurrentAddress = currentAddress + ", " + currentCity + ", "
-                                    + currentState + ", " + currentCountry + ", " + currentPostalCode;
-
+                                fullCurrentAddress = address.get(0).getAddressLine(0);
                                 currentLocationSet = true;
 
                                 //Toast.makeText(getApplicationContext(), fullCurrentAddress,Toast.LENGTH_LONG).show();
@@ -795,5 +746,43 @@ public class TripDetails extends AppCompatActivity implements NavigationView.OnN
     protected void onPause() {
         handler.removeCallbacks(runnable); //stop handler when activity not visible
         super.onPause();
+    }
+
+    public void addMarkerOnMap(boolean currentLocationSet, int place, EditText etName){
+        boolean feedback = false;
+        if(!currentLocationSet){
+            latLng = new LatLng(-29.0852,26.1596);
+        }
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                MarkerOptions pickUpOptions = new MarkerOptions().position(googleMap.getCameraPosition().target)
+                        .title("Pick up point")
+                        .draggable(false);
+                Marker newMarker = googleMap.addMarker(pickUpOptions);
+                googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+                    @Override
+                    public void onCameraIdle() {
+                        try {
+                            newMarkerLatLng = googleMap.getCameraPosition().target;
+                            newAddressList = geocoder.getFromLocation(newMarkerLatLng.latitude,
+                                    newMarkerLatLng.longitude,1);
+                            fullNewAddress = newAddressList.get(0).getAddressLine(0);
+                            etName.setText(fullNewAddress);
+                            boolean feedback = true;
+                        } catch (IOException e) {
+                            currentLocationBtn.setVisibility(View.GONE);
+                            currentLocationDiv.setVisibility(View.GONE);
+                        }
+                    }
+                });
+                googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+                    @Override
+                    public void onCameraMove() {
+                        newMarker.setPosition(googleMap.getCameraPosition().target);//to center in map
+                    }
+                });
+            }
+        });
     }
 }
