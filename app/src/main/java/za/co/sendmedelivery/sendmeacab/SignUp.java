@@ -1,15 +1,23 @@
 package za.co.sendmedelivery.sendmeacab;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.preference.PreferenceManager;
 import android.text.Editable;
 
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,37 +38,52 @@ import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import static za.co.sendmedelivery.sendmeacab.MainActivity.UserDetails;
+
+import static android.widget.Toast.makeText;
+
 
 public class SignUp extends AppCompatActivity {
+
     EditText NameET, SurnameET, PhoneET, EmailET, AddressET, PasswordET, PWET;
-    Button SignUpButton, Search, predictionBtn1, predictionBtn2, predictionBtn3, predictionBtn4,
-            predictionBtn5, predictionBtn6;
+    Button predictionBtn1, predictionBtn2, predictionBtn3, predictionBtn4,
+            predictionBtn5, predictionBtn6,SignUp;
     int predictionCnt;
     TextView backToLogin;
     private EditText queryText;
     StringBuilder mResult;
     LinearLayout PredictionLayout;
+
+    public static  String Name = "Name";
+    public static  String Phone = "Phone";
+    public static  String Email = "Email";
+    public static  String Surname = "Surname";
+    public static  String Address = "Address";
+    public static  String Id = "Id";
+    public static  Boolean SaveDetails = false;
+
     private final String TAG = SignUp.class.getSimpleName();
     private AutoCompleteTextView locationSearchActv;// instance of AutoCompleteText View
-    private TextView addressTv, locationDataTv; // TextViews Used to display the adddress selected by the user
+
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        NameET = findViewById(R.id.etNameSignUp);
+        SurnameET = findViewById(R.id.etSurnameSignUp);
+        PhoneET = findViewById(R.id.etPhoneSignUp);
+        PasswordET = findViewById(R.id.etPasswordSignUp);
+        PWET = findViewById(R.id.etPasswordAgnSignUp);
+        EmailET = findViewById(R.id.etEmailSignUp);
+        SignUp = findViewById(R.id.btnSignUpDone);
+        backToLogin = (TextView) findViewById(R.id.tv_back_to_login);
+        BackToLogin();
         AddressET = findViewById(R.id.autocomplete_address);
         locationSearchActv = findViewById(R.id.autocomplete_address);
 
@@ -104,9 +127,9 @@ public class SignUp extends AppCompatActivity {
                 predictionBtn6.setVisibility(View.GONE);
 
                 FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-                        // Call either setLocationBias() OR setLocationRestriction().
+
                         .setLocationBias(bounds)
-                        .setCountry("za")//Nigeria
+                        .setCountry("za")
                         .setTypeFilter(TypeFilter.ADDRESS)
                         .setSessionToken(token)
                         .setQuery(queryText.getText().toString())
@@ -210,21 +233,24 @@ public class SignUp extends AppCompatActivity {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://sendmedelivery.co.za/aCab/App/SignUp.php",
                     response -> {
                         int intResponse = Integer.parseInt(response);
-                        if(intResponse==0){
-                            Toast.makeText(getApplicationContext(), "An account with your Email address or Phone number already exists. " +
-                                    "Go back to Login or try again.", Toast.LENGTH_LONG).show();
-                            backToLogin.setVisibility(View.VISIBLE);
-                        }
-                        else if(intResponse==1){
-                            startActivity((new Intent(SignUp.this, TripDetails.class)));
-                        }
-                        else if(intResponse==3){
-                            Toast.makeText(getApplicationContext(), "Database connection problem ", Toast.LENGTH_LONG).show();
+                        switch(intResponse){
+                            case 0:
+                                Toast.makeText(getApplicationContext(), "An account with your Email address or Phone number already exists. " +
+                                        "Go back to Login or try again.", Toast.LENGTH_LONG).show();
+                                break;
+                            case 2:
+                                Toast.makeText(getApplicationContext(), "Could not sign up. Please try again. ", Toast.LENGTH_LONG).show();
+                                break;
 
-                        }
-                        else
-                            Toast.makeText(getApplicationContext(), "There is a database query problem.", Toast.LENGTH_LONG).show();
+                            case 3:
+                                Toast.makeText(getApplicationContext(), "Database connection problem ", Toast.LENGTH_LONG).show();
+                                break;
 
+                            default:
+
+                                saveDetails(response);
+                                //startActivity((new Intent(SignUp.this, TripDetails.class)));
+                        }
                     }, error -> {
 
             }){
@@ -242,6 +268,9 @@ public class SignUp extends AppCompatActivity {
             };
             Volley.newRequestQueue(this).add(stringRequest);
         }
+        else
+            Toast.makeText(getApplicationContext(), "There is a problem.", Toast.LENGTH_LONG).show();
+
     }
 
     public boolean InputValidation(String fname, String sname, String phone_num,String email, String passwordEntry1, String passwordConfirm){
@@ -263,27 +292,37 @@ public class SignUp extends AppCompatActivity {
             flag=false;
         }
         else{
-            PhoneNumberValidation(phone_num);
+            boolean phoneResult= PhoneNumberValidation(phone_num);
+            if(!phoneResult){
+                PhoneET.setError("You have entered and invalid phone number.Try again");
+                PhoneET.requestFocus();
+            }
         }
         if (TextUtils.isEmpty(email)){
             EmailET.setError("Please enter your email");
             EmailET.requestFocus();
             flag=false;;
         }
-        else if(!email.matches(emailPattern)){
+        else{
+
+            if(!email.matches(emailPattern)){
             EmailET.setError("Enter a valid email");
             EmailET.requestFocus();
-            flag=false;;
+            flag=false;
+            }
         }
         if (TextUtils.isEmpty(passwordEntry1)) {
             PasswordET.setError("Enter a password");
             PasswordET.requestFocus();
             flag=false;
         }
-        else if (!PasswordValidation(passwordEntry1)) {
-            PasswordET.setError("Your password must be at least 8 characters and include alphabets" +
-                    " and numbers with no special characters");
-            flag=false;
+        else{
+            boolean passwordResult = PasswordValidation(passwordEntry1);
+            if(!passwordResult){
+                PasswordET.setError("Your password must be at least 8 characters and include alphabets" +
+                        " and numbers with no special characters");
+                flag=false;
+            }
         }
         if (TextUtils.isEmpty(passwordConfirm)) {
             PWET.setError("Please enter a matching password ");
@@ -299,46 +338,39 @@ public class SignUp extends AppCompatActivity {
         return flag;
 
     }
-    public void PhoneNumberValidation(String phone_no){
+    public boolean PhoneNumberValidation(String phone_no){
+        boolean phoneValid = true;
 
         if(phone_no.length()>12||phone_no.length()<10){
-            PhoneET.setError("You have entered and invalid phone number.Try again");
-            PhoneET.requestFocus();
-            return;
+            phoneValid = false;
         }
         else{
             if(phone_no.length()==12){
                 if (phone_no.charAt(0)!='+'){
-                    PhoneET.setError("You have entered and invalid phone number.Try again");
-                    PhoneET.requestFocus();
-                    return;
+                    phoneValid = false;
                 }
                 else {
                     if(phone_no.charAt(1)!='2'&&phone_no.charAt(2)!='7'){
-                        PhoneET.setError("You have entered and invalid phone number.Try again");
-                        PhoneET.requestFocus();
-                        return;
+                        phoneValid = false;
                     }
                 }
             }
             else{
                 if(phone_no.length()==10){
                     if(phone_no.charAt(0)!='0'){
-                        PhoneET.setError("You have entered and invalid phone number.Try again");
-                        PhoneET.requestFocus();
-                        return;
+                        phoneValid = false;;
                     }
                 }
                 if (phone_no.length()==11){
                     if(phone_no.charAt(0)!='2'&&phone_no.charAt(1)!='7'){
-                        PhoneET.setError("You have entered and invalid phone number.Try again");
-                        PhoneET.requestFocus();
-                        return;
+                        phoneValid = false;
                     }
                 }
             }
         }
+        return phoneValid;
     }
+
     public boolean PasswordValidation(String password1){
         int letterCnt = 0, digitCnt = 0;
         boolean passwordFlag=true;
@@ -366,5 +398,43 @@ public class SignUp extends AppCompatActivity {
         }
         return passwordFlag;
     }
+    public void saveDetails(String ID){
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(Id,ID);
+        editor.putString(Name,NameET.getText().toString());
+        editor.putString(Surname,SurnameET.getText().toString());
+        editor.putString(Phone,PhoneET.getText().toString());
+        editor.putString(Address,AddressET.getText().toString());
+        editor.putString(Email,EmailET.getText().toString());
+        editor.commit();
+
+        Toast.makeText(getApplicationContext(), sharedPreferences.getString(Name,"")+" have successfully signed up! ", Toast.LENGTH_LONG).show();
+    }
+    public void BackToLogin(){
+        String string_back_to_login = "Go Back to Login";
+        SpannableString ss_back_to_login = new SpannableString(string_back_to_login);
+        ClickableSpan clickableSpan_back_to_login = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                startActivity((new Intent(SignUp.this, MainActivity.class)));
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setColor(Color.BLUE);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss_back_to_login.setSpan(clickableSpan_back_to_login, 0, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        backToLogin.setText(ss_back_to_login);
+        backToLogin.setMovementMethod(LinkMovementMethod.getInstance());
+
+    }
+
 
 }
