@@ -89,6 +89,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnSignUp_OnClick(View v){
-        startActivity((new Intent(MainActivity.this, TripDetails.class)));
+        startActivity((new Intent(MainActivity.this, TripFinaliseActivity.class)));
     }
 }

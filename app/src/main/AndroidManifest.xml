@@ -13,7 +13,7 @@
         <activity
             android:name=".TripFinaliseActivity"
             android:label="@string/title_activity_trip_finalise"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/HiddenTitleTheme"></activity>
 
         <activity
             android:name=".TripDetails"

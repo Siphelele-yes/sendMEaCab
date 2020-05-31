@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Notification;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.google.android.gms.common.api.ApiException;
@@ -25,6 +27,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -69,27 +73,30 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class TripFinaliseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TripFinaliseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     private DrawerLayout drawer; //Drawer Menu
     //Current location for map
-    GoogleMap googleMap;
-    LatLng latLng, newMarkerLatLng;
+    GoogleMap mMap;
+    LatLng pickupLatLng, dropoffLatLng;
     SupportMapFragment mapFragment;
-    FusedLocationProviderClient client;
-    private final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private LocationSettingsRequest.Builder builder;
-    private final int REQUEST_CHECK_CODE = 8989;
-    int delay = 2*1000; //Delay for 2 seconds.  One second = 1000 milliseconds.
-    //get address from coordinates
-    Geocoder geocoder;
-    List<Address> address, newAddressList;
-    String fullCurrentAddress, fullNewAddress;
-    boolean currentLocationSet = false;
+    //Route on map
+    ArrayList<LatLng> listPoints;
 
     //Animation variables
     ConstraintLayout tripDetailsLayout;
@@ -118,7 +125,7 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.topMapLayout);
-        //mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(this);
 
         //Drawer Menu
         drawer = findViewById(R.id.drawer_layout_trip_finalise_activity);
@@ -153,6 +160,149 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
         RectangularBounds bounds = RectangularBounds.newInstance(
                 new LatLng(-33.880490, 151.184363), //dummy lat/lng
                 new LatLng(-33.858754, 151.229596));
+    }
+
+    private String getRequestUrl(LatLng origin, LatLng dest) {
+        String str_org = "origin=" + origin.latitude + "," + origin.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        String sensor = "sensor=false";
+        String mode = "mode=driving";
+        String param = str_org + "&" + str_dest + "&" + sensor + "&" + mode;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param +
+                "&key=AIzaSyBLCIeprajGmDHwzYDy-pkHPKJtO8juWLo";
+
+        return url;
+    }
+
+    private String requestDirections(String reqUrl) throws IOException {
+        String responseString = "";
+        InputStream inputStream = null;
+        HttpURLConnection httpURLConnection = null;
+
+        URL url = null;
+        try {
+            url = new URL(reqUrl);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.connect();
+
+            inputStream = httpURLConnection.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            StringBuffer stringBuffer = new StringBuffer();
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null){
+                stringBuffer.append(line);
+            }
+
+            responseString = stringBuffer.toString();
+            bufferedReader.close();
+            inputStreamReader.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+            inputStream.close();
+            }
+            httpURLConnection.disconnect();
+        }
+        return  responseString;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        listPoints = new ArrayList<>();
+        //pickup
+        pickupLatLng = new LatLng(-29.139185,26.237474);
+        listPoints.add(pickupLatLng);
+        MarkerOptions pickupOptions = new MarkerOptions().position(pickupLatLng)
+                .title("Pick up point")
+                .draggable(false);
+        Marker pickupMarker = mMap.addMarker(pickupOptions);
+        //dropoff
+        dropoffLatLng = new LatLng(-29.093619,26.165049);
+        listPoints.add(dropoffLatLng);
+        MarkerOptions dropoffOptions = new MarkerOptions().position(dropoffLatLng)
+                .title("Drop off point")
+                .draggable(false);
+        Marker dropoffMarker = mMap.addMarker(dropoffOptions);
+        //Routes
+        String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
+        TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
+        taskRequestDirections.execute(url);
+        //map
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pickupLatLng, 12));
+    }
+
+    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String responseString = "";
+            try {
+                responseString = requestDirections(strings[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return responseString;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //Parse json here
+            TaskParser taskParser = new TaskParser();
+            taskParser.execute(s);
+        }
+    }
+
+    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> >{
+
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
+            JSONObject jsonObject = null;
+            List<List<HashMap<String, String>>> routes = null;
+            try {
+                jsonObject = new JSONObject(strings[0]);
+                DirectionsParser directionsParser = new DirectionsParser();
+                routes = directionsParser.parse(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
+            ArrayList points = null;
+            PolylineOptions polylineOptions = null;
+
+            for(List<HashMap<String, String>> path : lists){
+                points = new ArrayList();
+                polylineOptions = new PolylineOptions();
+
+                for (HashMap<String, String> point : path){
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lon = Double.parseDouble(point.get("lon"));
+
+                    points.add(new LatLng(lat, lon));
+                }
+
+                polylineOptions.addAll(points);
+                polylineOptions.width(15);
+                polylineOptions.color(Color.BLUE);
+                polylineOptions.geodesic(true);
+            }
+
+            if(polylineOptions != null){
+                mMap.addPolyline(polylineOptions);
+            } else {
+                Toast.makeText(getApplicationContext(), "Directions not found", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     //Animating the address details layout to go to the top and hide map from screen
@@ -217,43 +367,5 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_trip_finalise_activity,
                 new ProfileFragment()).commit();
         drawer.closeDrawer(GravityCompat.START);
-    }
-
-    public void addMarkerOnMap(boolean currentLocationSet, int place, EditText etName){
-        boolean feedback = false;
-        if(!currentLocationSet){
-            latLng = new LatLng(-29.0852,26.1596);
-        }
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                MarkerOptions pickUpOptions = new MarkerOptions().position(googleMap.getCameraPosition().target)
-                        .title("Pick up point")
-                        .draggable(false);
-                Marker newMarker = googleMap.addMarker(pickUpOptions);
-                googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
-                    @Override
-                    public void onCameraIdle() {
-                        try {
-                            newMarkerLatLng = googleMap.getCameraPosition().target;
-                            newAddressList = geocoder.getFromLocation(newMarkerLatLng.latitude,
-                                    newMarkerLatLng.longitude,1);
-                            fullNewAddress = newAddressList.get(0).getAddressLine(0);
-                            etName.setText(fullNewAddress);
-                            boolean feedback = true;
-                        } catch (IOException e) {
-                            currentLocationBtn.setVisibility(View.GONE);
-                            currentLocationDiv.setVisibility(View.GONE);
-                        }
-                    }
-                });
-                googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
-                    @Override
-                    public void onCameraMove() {
-                        newMarker.setPosition(googleMap.getCameraPosition().target);//to center in map
-                    }
-                });
-            }
-        });
     }
 }
