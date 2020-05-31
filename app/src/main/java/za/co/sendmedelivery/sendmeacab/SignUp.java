@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.preference.PreferenceManager;
@@ -16,6 +17,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -25,18 +27,30 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import java.lang.*;
+
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Status;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+
 import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +61,7 @@ import static android.widget.Toast.makeText;
 
 
 public class SignUp extends AppCompatActivity {
+
 
     EditText NameET, SurnameET, PhoneET, EmailET, AddressET, PasswordET, PWET;
     Button predictionBtn1, predictionBtn2, predictionBtn3, predictionBtn4,
@@ -207,11 +222,15 @@ public class SignUp extends AppCompatActivity {
             }
         });
 
+
         AddressET.setOnFocusChangeListener((View v, boolean hasFocus) -> {
             if (!hasFocus) {
                 PredictionLayout.setVisibility(View.GONE);
             }
         });
+
+        backToLogin = (TextView)findViewById(R.id.tvBackToLogin);
+
     }
 
     public void btnSignUpDone_OnClick(View v) {
@@ -224,6 +243,7 @@ public class SignUp extends AppCompatActivity {
         final String passwordEntry1 = PasswordET.getText().toString();
         final String passwordConfirm = PWET.getText().toString();
         final String psw_repeat;
+
         final int response1 = 1, response0 = 0;
 
         boolean flagResult=InputValidation(fname,sname,phone_num,email,passwordEntry1,passwordConfirm);

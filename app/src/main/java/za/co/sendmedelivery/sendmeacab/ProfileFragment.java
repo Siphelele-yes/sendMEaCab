@@ -1,5 +1,6 @@
 package za.co.sendmedelivery.sendmeacab;
 
+
         import android.content.Context;
         import android.content.SharedPreferences;
         import android.os.Bundle;
@@ -56,34 +57,32 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         signUp = new SignUp();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnChangePassword:
                 passwordTrigger.setVisibility(v.GONE);
                 passwordLayout.setVisibility(v.VISIBLE);
                 break;
 
             case R.id.btnSaveChanges:
-                if(!savedName.equals(Name)){
-                    if(TextUtils.isEmpty(Name.toString())){
+                if (!savedName.equals(Name)) {
+                    if (TextUtils.isEmpty(Name.toString())) {
                         Name.setError("Please enter a name");
                         Name.requestFocus();
-                    }
-                    else
-                        editor.putString("Name",Name.toString());
+                    } else
+                        editor.putString("Name", Name.toString());
                 }
-                if(!savedSurname.equals(Surname)){
-                    if(TextUtils.isEmpty(Surname.toString())){
+                if (!savedSurname.equals(Surname)) {
+                    if (TextUtils.isEmpty(Surname.toString())) {
                         Surname.setError("Please enter a surname");
                         Surname.requestFocus();
-                    }
-                    else
-                        editor.putString("Surname",Surname.toString());
+                    } else
+                        editor.putString("Surname", Surname.toString());
                 }
-                if(!savedPhone.equals(Phone)){
-                    if(TextUtils.isEmpty(Phone.toString())){
+                if (!savedPhone.equals(Phone)) {
+                    if (TextUtils.isEmpty(Phone.toString())) {
                         Phone.setError("Please enter a phone number");
                         Surname.requestFocus();
-                    }else {
+                    } else {
 
                         boolean phoneResult = signUp.PhoneNumberValidation(Phone.toString());
                         if (!phoneResult) {
@@ -94,26 +93,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     }
 
                 }
-                if(!savedAddress.equals(Address)){
-                    if(TextUtils.isEmpty(Address.toString())){
+                if (!savedAddress.equals(Address)) {
+                    if (TextUtils.isEmpty(Address.toString())) {
                         Address.setError("Please enter an Address");
                         Address.requestFocus();
-                    }
-                    else
-                        editor.putString("Address",Address.toString());
+                    } else
+                        editor.putString("Address", Address.toString());
                 }
-                if(!savedEmail.equals(Email)){
-                    if(!Email.toString().matches(emailPattern)){
+                if (!savedEmail.equals(Email)) {
+                    if (!Email.toString().matches(emailPattern)) {
                         Email.setError("Enter a valid email");
                         Email.requestFocus();
-                    }
-                    else
-                        editor.putString("Email",Email.toString());
+                    } else
+                        editor.putString("Email", Email.toString());
 
                 }
                 Toast.makeText(getActivity(), "Your changes are saved.", Toast.LENGTH_LONG).show();
                 break;
         }
-
     }
+
+
 }
