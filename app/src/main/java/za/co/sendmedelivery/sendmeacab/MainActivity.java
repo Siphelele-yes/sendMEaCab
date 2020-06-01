@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         // Get Reference to variables
         sharedPreferences = getSharedPreferences(UserDetails,
                 Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
+
         UsernameET = (EditText)findViewById(R.id.etEmail);
         PasswordET = (EditText) findViewById(R.id.etPassword);
         tv_fgt_password = (TextView)findViewById(R.id.tv_fgt_password);
@@ -158,9 +160,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity((new Intent(MainActivity.this, SignUp.class)));
     }
     public void SaveUserDetails(String userDetails){
-        String [] tokenDetails = userDetails.split(",");
-
+        String [] tokenDetails = userDetails.split("~");
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
 
         editor.putString(Id,tokenDetails[0]);
         editor.putString(Name,tokenDetails[1]);

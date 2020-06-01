@@ -217,20 +217,13 @@ public class SignUp extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
-
-
             }
         });
-
-
         AddressET.setOnFocusChangeListener((View v, boolean hasFocus) -> {
             if (!hasFocus) {
                 PredictionLayout.setVisibility(View.GONE);
             }
         });
-
-        backToLogin = (TextView)findViewById(R.id.tvBackToLogin);
-
     }
 
     public void btnSignUpDone_OnClick(View v) {

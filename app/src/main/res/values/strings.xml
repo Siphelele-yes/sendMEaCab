@@ -39,22 +39,11 @@
     <string name="et_EmailSignUp">Email Address</string>
     <string name="et_AddressSignUp">Default Address</string>
     <string name="et_PasswordAgn">Re-enter Password</string>
-<<<<<<< HEAD
-    <string name="go_back_to_login">Go back to Login</string>
 
-    <string name="api_key">AIzaSyBV0bZmAnuY96_VoTFR-7BxgngH86P3Hv8</string>
-
-=======
->>>>>>> 96ca45c075921af96a02ed9c19ca74ca3b8d1439
     <string name="et_PickupAddress">Enter Pickup Address</string>
     <string name="et_DropoffAddress">Enter Drop-off Address</string>
     <string name="title_activity_trip_spec">TripSpec</string>
     <string name="title_activity_trip_details">TripDetails</string>
-<<<<<<< HEAD
-
-    <string name="back_to_login">Back to Login</string>
-
-=======
     <string name="tv_back_to_login">Back to Login</string>
     <string name="tv_viewProfile">View Profile Settings</string>
     <string name="title_myProfile">My Profile</string>
@@ -71,5 +60,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
->>>>>>> 96ca45c075921af96a02ed9c19ca74ca3b8d1439
+    <string name="go_back_to_login">Back to Login</string>
+
 </resources>
