@@ -38,85 +38,76 @@
 
             <LinearLayout
                 android:id="@+id/tripAddressLayout"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_marginBottom="10dp">
 
                 <LinearLayout
+                    android:id="@+id/distanceLayout"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/iv_pickupIcon"
+                        android:id="@+id/ivDistance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="10dp"
-                        app:srcCompat="@drawable/ic_gps" />
+                        android:drawableTint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_navigation" />
 
-                    <ImageView
-                        android:id="@+id/iv_roadIcon"
-                        android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        app:srcCompat="@drawable/ic_road" />
-
-                    <ImageView
-                        android:id="@+id/iv_dropoffIcon"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvDistance"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="8dp"
-                        app:srcCompat="@drawable/ic_pin_drop" />
+                        android:layout_gravity="center_horizontal" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/verticalDivider"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/etPickupAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:background="@layout/rounded_border_edittext"
-                        android:cursorVisible="true"
-                        android:ems="10"
-                        android:hint="@string/et_PickupAddress"
-                        android:inputType="textPostalAddress"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textCursorDrawable="@null"/>
+                    <View
+                        android:id="@+id/divider5"
+                        android:layout_width="1dp"
+                        android:layout_height="41dp"
+                        android:background="?android:attr/listDivider" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/etDropoffAddress"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/durationLayout"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/verticalDivider"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivDuration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="17dp"
-                        android:background="@layout/rounded_border_edittext"
-                        android:cursorVisible="true"
-                        android:ems="10"
-                        android:hint="@string/et_DropoffAddress"
-                        android:inputType="textPostalAddress"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textCursorDrawable="@null" />
+                        android:drawableTint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_duraton" />
+
+                    <TextView
+                        android:id="@+id/tvDuration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/addressOptionsLayout"
+                android:id="@+id/cabOptionsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -125,76 +116,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="@color/colorTableDataSep" />
+
                 <Button
-                    android:id="@+id/btnUseLocationPickup"
+                    android:id="@+id/btnChooseCab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorAccent"
-                    android:drawableLeft="@drawable/ic_my_location"
+                    android:drawableLeft="@drawable/ic_car"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/colorPrimary"
                     android:gravity="start|center_vertical"
                     android:paddingLeft="20dp"
-                    android:text="@string/btnUseLocation"
+                    android:text="@string/btn_ChooseCab"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
-                    android:textStyle="normal"
-                    android:visibility="gone"/>
+                    android:textStyle="normal" />
                 <View
                     android:id="@+id/divider3"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_marginLeft="35dp"
                     android:layout_marginRight="35dp"
-                    android:background="@color/colorTableDataSep"
-                    android:visibility="gone"/>
-                <Button
-                    android:id="@+id/btnDefaultPickup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    android:drawableLeft="@drawable/ic_current_location"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/colorPrimary"
-                    android:gravity="start|left|center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="@string/btnUseDefaultAddress"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="normal" />
-                <View
-                    android:id="@+id/divider2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="35dp"
-                    android:layout_marginRight="35dp"
-                    android:background="@color/colorTableDataSep" />
-                <Button
-                    android:id="@+id/btnPickupMap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    android:drawableLeft="@drawable/ic_map_set"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/colorPrimary"
-                    android:gravity="start|center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="@string/btnSetPickupMap"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <View
-                    android:id="@+id/dividerPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="35dp"
-                    android:layout_marginRight="35dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/colorTableDataSep"
-                    android:visibility="invisible" />
+                    android:background="@color/colorTableDataSep"/>
 
             </LinearLayout>
 
