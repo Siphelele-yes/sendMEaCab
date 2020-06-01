@@ -24,6 +24,7 @@
     <string name="btnUseDefaultAddress">My Default Address</string>
     <string name="btn_ChangePassword">Change Password</string>
     <string name="btn_saveChanges">Save Changes</string>
+    <string name="btn_ChooseCab">Choose a cab</string>
     <string name="fgtPassword">I forgot my password</string>
     <string name="btnRecoverPassword">Recover Password</string>
     <string name="title_activity_reset_password">ResetPassword</string>

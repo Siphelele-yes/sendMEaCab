@@ -19,12 +19,14 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -71,6 +73,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -83,6 +86,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,18 +99,22 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
     GoogleMap mMap;
     LatLng pickupLatLng, dropoffLatLng;
     SupportMapFragment mapFragment;
+    //Animating camera
+    LatLngBounds.Builder builder;
+    CameraUpdate cu;
     //Route on map
     ArrayList<LatLng> listPoints;
+    List<Marker> listMarkers;
+    TextView duration, distance;
 
     //Animation variables
     ConstraintLayout tripDetailsLayout;
-    LinearLayout bottomTripSpecLayout, addressOptionsLayout;
+    LinearLayout bottomTripSpecLayout, cabOptionsLayout;
     FrameLayout topMapLayout;
     Animation frombottom, fromtop;
 
-    Button currentLocationBtn, defaultAddressBtn, setOnMapBtn;
-    View currentLocationDiv;
-    private static final String TAG = TripDetails.class.getSimpleName();
+    Button choosecabBtn;
+    View chooseCabDiv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,10 +125,8 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
         setSupportActionBar(toolbar);
 
         //Declarations
-        currentLocationBtn = (Button) findViewById(R.id.btnUseLocationPickup);
-        currentLocationDiv = (View) findViewById(R.id.divider3);
-        defaultAddressBtn = (Button) findViewById(R.id.btnDefaultPickup);
-        setOnMapBtn = (Button) findViewById(R.id.btnPickupMap);
+        choosecabBtn = (Button) findViewById(R.id.btnChooseCab);
+        chooseCabDiv = (View) findViewById(R.id.divider3);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -150,16 +156,14 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
         topMapLayout.setAnimation(fromtop);
 
         tripDetailsLayout = (ConstraintLayout) findViewById(R.id.tripDetailsLayout);
-        addressOptionsLayout = (LinearLayout) findViewById(R.id.addressOptionsLayout);
+        cabOptionsLayout = (LinearLayout) findViewById(R.id.cabOptionsLayout);
 
         if(!Places.isInitialized()){
             Places.initialize(getApplicationContext(),apiKey);
         }
-        PlacesClient places = Places.createClient(this);
-        AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
-        RectangularBounds bounds = RectangularBounds.newInstance(
-                new LatLng(-33.880490, 151.184363), //dummy lat/lng
-                new LatLng(-33.858754, 151.229596));
+
+        duration = (TextView) findViewById(R.id.tvDuration);
+        distance = (TextView) findViewById(R.id.tvDistance);
     }
 
     private String getRequestUrl(LatLng origin, LatLng dest) {
@@ -204,7 +208,7 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
             e.printStackTrace();
         } finally {
             if (inputStream != null) {
-            inputStream.close();
+                inputStream.close();
             }
             httpURLConnection.disconnect();
         }
@@ -215,6 +219,7 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         listPoints = new ArrayList<>();
+        listMarkers = new ArrayList<>();
         //pickup
         pickupLatLng = new LatLng(-29.139185,26.237474);
         listPoints.add(pickupLatLng);
@@ -222,6 +227,7 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
                 .title("Pick up point")
                 .draggable(false);
         Marker pickupMarker = mMap.addMarker(pickupOptions);
+        listMarkers.add(pickupMarker);
         //dropoff
         dropoffLatLng = new LatLng(-29.093619,26.165049);
         listPoints.add(dropoffLatLng);
@@ -229,12 +235,21 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
                 .title("Drop off point")
                 .draggable(false);
         Marker dropoffMarker = mMap.addMarker(dropoffOptions);
+        listMarkers.add(dropoffMarker);
+        //Camera animation
+        builder = new LatLngBounds.Builder();
+        for (Marker m : listMarkers) {
+            builder.include(m.getPosition());
+        }
+        int padding = 200;
+        LatLngBounds bounds = builder.build();
+        cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         //Routes
         String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
         TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
         taskRequestDirections.execute(url);
         //map
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pickupLatLng, 12));
+        googleMap.animateCamera(cu);
     }
 
     public class TaskRequestDirections extends AsyncTask<String, Void, String> {
@@ -259,11 +274,11 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
         }
     }
 
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> >{
+    public class TaskParser extends AsyncTask<String, Integer, List<List<HashMap<String, String>>> >{
 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
-            JSONObject jsonObject = null;
+            JSONObject jsonObject;
             List<List<HashMap<String, String>>> routes = null;
             try {
                 jsonObject = new JSONObject(strings[0]);
@@ -292,13 +307,16 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
                 }
 
                 polylineOptions.addAll(points);
-                polylineOptions.width(15);
+                polylineOptions.width(10);
                 polylineOptions.color(Color.BLUE);
                 polylineOptions.geodesic(true);
             }
 
             if(polylineOptions != null){
                 mMap.addPolyline(polylineOptions);
+
+                distance.setText(Dec.distance);
+                duration.setText(Dec.duration);
             } else {
                 Toast.makeText(getApplicationContext(), "Directions not found", Toast.LENGTH_SHORT).show();
             }
@@ -306,7 +324,7 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
     }
 
     //Animating the address details layout to go to the top and hide map from screen
-    public void addressEntryAnim(){
+    public void cabOptionsAnim(){
         //Remove map
         topMapLayout.setVisibility(View.GONE);
 
@@ -367,5 +385,9 @@ public class TripFinaliseActivity extends AppCompatActivity implements Navigatio
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_trip_finalise_activity,
                 new ProfileFragment()).commit();
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    public void btnChooseCab_OnClick(View v){
+        cabOptionsAnim();
     }
 }
