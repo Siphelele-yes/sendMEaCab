@@ -101,7 +101,7 @@
                 android:text="@string/et_AddressSignUp"
                 android:textSize="18sp" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/etAddressEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -112,6 +112,95 @@
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/colorPrimary"
                 android:inputType="textPostalAddress" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/predictionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/prediction1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction1"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction2"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction3"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction4"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction5"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction6"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -164,6 +253,13 @@
             android:orientation="vertical"
             android:visibility="gone">
 
+            <TextView
+                android:id="@+id/tvCurrentPasswordEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_CurrentPassword"
+                android:textSize="18sp" />
+
             <EditText
                 android:id="@+id/etPasswordEdit"
                 android:layout_width="match_parent"
@@ -176,6 +272,14 @@
                 android:inputType="textPassword"
                 android:textCursorDrawable="@null" />
 
+            <TextView
+                android:id="@+id/tvNewPasswordEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/et_NewPassword"
+                android:visibility="gone"
+                android:textSize="18sp" />
+
             <EditText
                 android:id="@+id/etNewPasswordEdit"
                 android:layout_width="match_parent"
@@ -186,7 +290,16 @@
                 android:drawableTint="@color/colorPrimary"
                 android:ems="10"
                 android:inputType="textPassword"
+                android:visibility="gone"
                 android:textCursorDrawable="@null" />
+
+            <TextView
+                android:id="@+id/tvNewPasswordAgnEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/et_NewPasswordAgn"
+                android:visibility="gone"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/etNewPasswordAgnEdit"
@@ -198,28 +311,8 @@
                 android:drawableTint="@color/colorPrimary"
                 android:ems="10"
                 android:inputType="textPassword"
+                android:visibility="gone"
                 android:textCursorDrawable="@null" />
-
-            <TextView
-                android:id="@+id/tvCurrentPasswordEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_CurrentPassword"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvNewPasswordEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/et_NewPassword"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvNewPasswordAgnEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/et_NewPasswordAgn"
-                android:textSize="18sp" />
 
         </LinearLayout>
 

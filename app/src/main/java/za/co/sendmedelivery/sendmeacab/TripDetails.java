@@ -775,4 +775,6 @@ public class TripDetails extends AppCompatActivity implements NavigationView.OnN
             }
         });
     }
+
+
 }
