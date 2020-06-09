@@ -1,14 +1,349 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light">
-
-    <TextView
-        android:layout_width="wrap_content"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Profile Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:background="@color/colorAccent"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNameEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/et_NameSignUp"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etNameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:textCursorDrawable="@null"
+                android:drawableStart="@drawable/ic_profile"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/tvSurnameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/et_SurnameSignUp"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etSurnameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:textCursorDrawable="@null"
+                android:drawableStart="@drawable/ic_profile"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/tvPhoneEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/et_PhoneSignUp"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etPhoneEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:textCursorDrawable="@null"
+                android:drawableStart="@drawable/ic_phone"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:inputType="phone" />
+
+            <TextView
+                android:id="@+id/tvEmailEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/et_EmailSignUp"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etEmailEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:textCursorDrawable="@null"
+                android:drawableStart="@drawable/ic_message"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                android:id="@+id/tvAddressEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/et_AddressSignUp"
+                android:textSize="18sp" />
+
+            <AutoCompleteTextView
+                android:id="@+id/etAddressEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:textCursorDrawable="@null"
+                android:drawableStart="@drawable/ic_location"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:inputType="textPostalAddress" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/predictionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/prediction1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction1"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction2"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction3"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction4"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction5"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/prediction6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="prediction6"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/dividerPassword"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/colorTableDataSep"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/passwordTriggerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnChangePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorAccent"
+                android:capitalize="none"
+                android:gravity="start|center_vertical"
+                android:onClick="btnChangePassword_OnClick"
+                android:text="@string/btn_ChangePassword"
+                android:textAllCaps="false"
+                android:textColor="#8A000000"
+                android:textSize="19sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/passwordLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvCurrentPasswordEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_CurrentPassword"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etPasswordEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:drawableStart="@drawable/ic_lock_password"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:textCursorDrawable="@null" />
+
+            <TextView
+                android:id="@+id/tvNewPasswordEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/et_NewPassword"
+                android:visibility="gone"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etNewPasswordEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:drawableStart="@drawable/ic_lock_password_agn"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:visibility="gone"
+                android:textCursorDrawable="@null" />
+
+            <TextView
+                android:id="@+id/tvNewPasswordAgnEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/et_NewPasswordAgn"
+                android:visibility="gone"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etNewPasswordAgnEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:drawableStart="@drawable/ic_lock_password_agn"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:visibility="gone"
+                android:textCursorDrawable="@null" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/dividerPassword2"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/colorTableDataSep"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnSaveChanges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@color/page_icon_background"
+                android:gravity="center_horizontal"
+                android:onClick="btnSaveChanges_OnClick"
+                android:padding="10dp"
+                android:text="@string/btn_saveChanges"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="normal|bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

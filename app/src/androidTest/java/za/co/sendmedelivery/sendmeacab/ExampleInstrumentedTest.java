@@ -1,9 +1,13 @@
 package za.co.sendmedelivery.sendmeacab;
 
 import android.content.Context;
+<<<<<<< HEAD
 
 
 import androidx.test.InstrumentationRegistry;
+=======
+import androidx.test.platform.app.InstrumentationRegistry;
+>>>>>>> 96ca45c075921af96a02ed9c19ca74ca3b8d1439
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Test;

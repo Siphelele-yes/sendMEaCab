@@ -22,6 +22,9 @@
     <string name="btnSetDropoffMap">Set Dropff On Map</string>
     <string name="btnUseLocation">Use Current Location</string>
     <string name="btnUseDefaultAddress">My Default Address</string>
+    <string name="btn_ChangePassword">Change Password</string>
+    <string name="btn_saveChanges">Save Changes</string>
+    <string name="btn_ChooseCab">Choose a cab</string>
     <string name="fgtPassword">I forgot my password</string>
     <string name="btnRecoverPassword">Recover Password</string>
     <string name="title_activity_reset_password">ResetPassword</string>
@@ -35,17 +38,29 @@
     <string name="et_SurnameSignUp">Surname</string>
     <string name="et_PhoneSignUp">Phone Number</string>
     <string name="et_EmailSignUp">Email Address</string>
-    <string name="et_AddressSignUp">Default Address (Optional)</string>
+    <string name="et_AddressSignUp">Default Address</string>
     <string name="et_PasswordAgn">Re-enter Password</string>
-    <string name="go_back_to_login">Go back to Login</string>
-
-    <string name="api_key">AIzaSyBV0bZmAnuY96_VoTFR-7BxgngH86P3Hv8</string>
 
     <string name="et_PickupAddress">Enter Pickup Address</string>
     <string name="et_DropoffAddress">Enter Drop-off Address</string>
     <string name="title_activity_trip_spec">TripSpec</string>
     <string name="title_activity_trip_details">TripDetails</string>
+    <string name="tv_back_to_login">Back to Login</string>
+    <string name="tv_viewProfile">View Profile Settings</string>
+    <string name="title_myProfile">My Profile</string>
+    <string name="tv_CurrentPassword">Current Password</string>
+    <string name="api_key">AIzaSyBV0bZmAnuY96_VoTFR-7BxgngH86P3Hv8</string>
+    <string name="map_key" translatable="false">AIzaSyBLCIeprajGmDHwzYDy-pkHPKJtO8juWLo</string>
+    <string name="title_activity_trip_confirm">TripConfirm</string>
+    <string name="title_activity_trip_finalise">TripFinaliseActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
-    <string name="back_to_login">Back to Login</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="go_back_to_login">Back to Login</string>
 
 </resources>

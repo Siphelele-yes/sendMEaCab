@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.SpannableString;
@@ -14,10 +16,12 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+
 
 import android.widget.EditText;
 import android.widget.Toast;
@@ -63,10 +67,12 @@ public class MainActivity extends AppCompatActivity {
         // Get Reference to variables
         sharedPreferences = getSharedPreferences(UserDetails,
                 Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
+
         UsernameET = (EditText)findViewById(R.id.etEmail);
         PasswordET = (EditText) findViewById(R.id.etPassword);
         tv_fgt_password = (TextView)findViewById(R.id.tv_fgt_password);
-        rememberMeCheckBox = (CheckBox) findViewById(R.id.saveLoginCheckBox);
+        //rememberMeCheckBox = (CheckBox) findViewById(R.id.saveLoginCheckBox);
 
 
         String string_fgt_password = "I forgot my password";
@@ -74,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         ClickableSpan clickableSpan_fgt_password = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                startActivity((new Intent(MainActivity.this, ForgotPassword.class)));
+                startActivity((new Intent(MainActivity.this, SignUp.class)));
             }
 
             @Override
@@ -154,9 +160,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity((new Intent(MainActivity.this, SignUp.class)));
     }
     public void SaveUserDetails(String userDetails){
-        String [] tokenDetails = userDetails.split(",");
-
+        String [] tokenDetails = userDetails.split("~");
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
 
         editor.putString(Id,tokenDetails[0]);
         editor.putString(Name,tokenDetails[1]);
@@ -170,14 +176,10 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Welcome : " + sharedPreferences.getString(Name, "") + " " + sharedPreferences.getString(Surname, ""), Toast.LENGTH_LONG).show();
 
     }
-    public void RememberMe(){
+    public void RememberMe() {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(String.valueOf(SaveDetails),true);
-
-
-
+        editor.putBoolean(String.valueOf(SaveDetails), true);
     }
-
 
 }
